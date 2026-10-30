@@ -1,0 +1,12 @@
+services:
+  libernt:
+    image: libernt-builder
+    build:
+      context: docker
+    user: "${LIBERNT_UID:-1000}:${LIBERNT_GID:-1000}"
+    volumes:
+      - ${PWD:-.}:/libernt
+    environment:
+      LIBERNT_TARGET: ${LIBERNT_TARGET:-liberntimg}
+      LIBERNT_JOBS: ${LIBERNT_JOBS:-}
+    command: ["-a", "amd64"]
