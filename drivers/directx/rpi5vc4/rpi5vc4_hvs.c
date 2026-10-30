@@ -186,7 +186,8 @@ Rpi5HvsBuildPlane(
 
 /* Bring-up diagnostics removed; retained as a no-op so the call sites and the
  * real error prints around them stay intact. */
-#define RPI5_HVS_DIAG(Dev, ...) ((void)(Dev))
+#define RPI5_HVS_DIAG(Dev, ...) \
+    do { if (InterlockedIncrement(&(Dev)->HvsDiagPrints) <= 64) DbgPrint(__VA_ARGS__); } while (0)
 
 BOOLEAN
 Rpi5HvsColdStartChannel(
